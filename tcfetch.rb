@@ -1,15 +1,15 @@
 require "tokyocabinet"
 require "nokogiri"
 require "open-uri"
+require_relative "tcfconfig"
 class TCFetch
   include TokyoCabinet
+  include TCFetchConfig
   def initialize
-    @storage={}
-    @catalogs=["may.2chan.net/b/"]
+    @catalogs=CATALOGS
     @sleep_duration=0.8
-    @tc_dir="/var/tmp/"
-    @tc_path=File.join(@tc_dir,"tcfetch.db")
-
+    @tc_dir=TC_DIR
+    @tc_path=TC_PATH
   end
 
   def catalogs
@@ -99,8 +99,9 @@ class TCFetch
       delete_keys.each do|dk|
         tdb.out(dk)
       end
+      $stdout.puts("expire #{delete_keys.size}")
+      $stdout.puts("left #{tdb.size}")
     end
-    $stdout.puts("expire #{delete_keys.size}")
   end
 
   def run
