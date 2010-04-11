@@ -1,4 +1,5 @@
 require "tokyocabinet"
+require "uri"
 module TCFetchCommon
   include TokyoCabinet
   CATALOGS=["may.2chan.net/b/"]
@@ -7,7 +8,7 @@ module TCFetchCommon
 
   def tdb_open(mode)
     tdb=TDB.new
-    if(!tdb.open(@tc_path,mode))
+    if(!tdb.open(TC_PATH,mode))
       ecode=tdb.ecode
       raise "open error #{tdb.errmsg(ecode)}"
     end
