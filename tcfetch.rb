@@ -60,22 +60,6 @@ class TCFetch
     $stdout.puts("write #{threads.size}")
   end
 
-  def tdb_open(mode)
-    tdb=TDB.new
-    if(!tdb.open(@tc_path,mode))
-      ecode=tdb.ecode
-      raise "open error #{tdb.errmsg(ecode)}"
-    end
-    begin
-      return yield(tdb)
-    ensure
-      if !tdb.close
-        ecode=tdb.ecode
-        raise "close error #{tdb.errmsg(ecode)}"
-      end
-    end
-  end
-
   def filter_fetched(thread_uris)
     return thread_uris unless File.exist?(@tc_path)
     tdb_open(TDB::OREADER) do|tdb|
