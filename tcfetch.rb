@@ -1,10 +1,10 @@
 require "tokyocabinet"
 require "nokogiri"
 require "open-uri"
-require_relative "tcfconfig"
+require_relative "tcfcommon"
 class TCFetch
   include TokyoCabinet
-  include TCFetchConfig
+  include TCFetchCommon
   def initialize
     @catalogs=CATALOGS
     @sleep_duration=0.8
