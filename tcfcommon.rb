@@ -2,8 +2,17 @@ require "tokyocabinet"
 require "uri"
 module TCFetchCommon
   include TokyoCabinet
-  CATALOGS=["may.2chan.net/b/"]
-  TC_DIR="/var/tmp/"
+  CATALOGS=[
+    "may.2chan.net/b/",
+    "img.2chan.net/b/",
+    "jun.2chan.net/b/",
+    "nov.2chan.net/b/",
+    "dec.2chan.net/b/",
+    "dat.2chan.net/b/",
+    "may.2chan.net/27/",
+    "dat.2chan.net/48/",
+  ]
+  TC_DIR="/var/tcfetch/"
   TC_PATH=File.join(TC_DIR,"tcfetch.db")
 
   def tdb_open(mode)
