@@ -37,11 +37,18 @@ class TCFetchFront
         tdb[uri.to_s]
       end.compact
     end
-    contents.map{|x|[x["uri"],x["content"].force_encoding("UTF-8").gsub("\0","").gsub(/\n|\r/," ")[0,20]].join("\n")}.join("\n")
+    contents.map do|x|
+      uri=x["uri"]
+      content=x["content"].force_encoding("UTF-8").gsub(/\n|\r/," ")[0,20]
+      content=content.gsub(/\0/,'')
+      content=" " if content.empty?
+      [uri,content].join("\n")
+    end.join("\n")
 
   end
 end
 
 if($0==__FILE__)
-  Rack::Handler::WEBrick.run(TCFetchFront.new,:Port => 8080)
+  #Rack::Handler::WEBrick.run(TCFetchFront.new,:Port => 8080)
+  p TCFetchFront.new.fetch("http://img.2chan.net/b/res/","85269072",[])
 end
