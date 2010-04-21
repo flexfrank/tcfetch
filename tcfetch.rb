@@ -98,5 +98,7 @@ class TCFetch
     end
   end
 end
-
-TCFetch.new.run
+if __FILE__==$0
+  #p TCFetch.new.fetch_content(URI.parse("http://img.2chan.net/b/res/85269072.htm")).encoding
+  TCFetch.new.run
+end

@@ -37,7 +37,7 @@ class TCFetchFront
         tdb[uri.to_s]
       end.compact
     end
-    contents.map{|x|[x["uri"],x["content"].force_encoding("UTF-8").gsub(/\n|\r/," ")[0,20]].join("\n")}.join("\n")
+    contents.map{|x|[x["uri"],x["content"].force_encoding("UTF-8").gsub("\0","").gsub(/\n|\r/," ")[0,20]].join("\n")}.join("\n")
 
   end
 end
