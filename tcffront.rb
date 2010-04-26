@@ -39,8 +39,9 @@ class TCFetchFront
     end
     contents.map do|x|
       uri=x["uri"]
-      content=x["content"].force_encoding("UTF-8").gsub(/\n|\r/," ")[0,20]
+      content=x["content"].force_encoding("UTF-8").gsub(/\n|\r/," ")
       content=content.gsub(/\0/,'')
+      content=content.encode("CP932",:undef=>:replace, :invalid=>:replace).encode("UTF-8")[0,20]
       content=" " if content.empty?
       [uri,content].join("\n")
     end.join("\n")
