@@ -44,7 +44,7 @@ class TCFetchFront
       content=content.encode("CP932",:undef=>:replace, :invalid=>:replace).encode("UTF-8")
       max=20
       if content.size>max
-        content=content[0,max]
+        content=content[0..max]
       end
       content=" " if content.empty?
       [uri,content].join("\n")
