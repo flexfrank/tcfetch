@@ -41,7 +41,11 @@ class TCFetchFront
       uri=x["uri"]
       content=x["content"].force_encoding("UTF-8").gsub(/\n|\r/," ")
       content=content.gsub(/\0/,'')
-      content=content.encode("CP932",:undef=>:replace, :invalid=>:replace).encode("UTF-8")[0,20]
+      content=content.encode("CP932",:undef=>:replace, :invalid=>:replace).encode("UTF-8")
+      max=20
+      if content.size>max
+        content=content[0,max]
+      end
       content=" " if content.empty?
       [uri,content].join("\n")
     end.join("\n")
@@ -51,5 +55,5 @@ end
 
 if($0==__FILE__)
   #Rack::Handler::WEBrick.run(TCFetchFront.new,:Port => 8080)
-  p TCFetchFront.new.fetch("http://img.2chan.net/b/res/","85269072",[])
+  p TCFetchFront.new.fetch("http://may.2chan.net/b/res/","114169141",[])
 end
