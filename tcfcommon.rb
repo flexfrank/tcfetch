@@ -11,6 +11,9 @@ module TCFetchCommon
     "dat.2chan.net/b/",
     "may.2chan.net/27/",
     "dat.2chan.net/48/",
+    "dec.2chan.net/18/",
+    "dec.2chan.net/24/",
+    "dec.2chan.net/50/",
   ]
   TC_DIR="/var/tcfetch/"
   TC_PATH=File.join(TC_DIR,"tcfetch.db")
