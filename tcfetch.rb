@@ -7,7 +7,7 @@ class TCFetch
   include TCFetchCommon
   def initialize
     @catalogs=CATALOGS
-    @sleep_duration=0.8
+    @sleep_duration=1.0
     @tc_dir=TC_DIR
     @tc_path=TC_PATH
   end
