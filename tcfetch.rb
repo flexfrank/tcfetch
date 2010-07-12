@@ -1,6 +1,7 @@
 require "tokyocabinet"
 require "nokogiri"
 require "open-uri"
+require "timeout"
 require_relative "tcfcommon"
 class TCFetch
   include TokyoCabinet
@@ -17,8 +18,10 @@ class TCFetch
   end
 
   def fetch(cat_uri)
-    cat_uri.open do|f|
-      return f.read
+    Timeout.timeout(10) do
+      cat_uri.open do|f|
+        return f.read
+      end
     end
   end
 
@@ -91,10 +94,14 @@ class TCFetch
   def run
     expire!
     catalogs.each do|cat|
-      fetched=cp932!(fetch(cat))
-      threads=thread_uris(fetched,cat)
-      threads=filter_fetched(threads)
-      fetch_and_write_thread_contents(threads)
+      begin
+        fetched=cp932!(fetch(cat))
+        threads=thread_uris(fetched,cat)
+        threads=filter_fetched(threads)
+        fetch_and_write_thread_contents(threads)
+      rescue Timeout::Error
+        $stderr.puts "timeout:#{cat}"
+      end
     end
   end
 end
